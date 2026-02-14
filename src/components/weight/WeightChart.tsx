@@ -28,17 +28,21 @@ export function WeightChart({ data, targetWeight }: WeightChartProps) {
       {
         label: "体重",
         data: data.map((d) => d.weight),
-        borderColor: "rgb(59, 130, 246)",
-        backgroundColor: "rgba(59, 130, 246, 0.1)",
+        borderColor: "#007aff",
+        backgroundColor: "rgba(0, 122, 255, 0.08)",
+        fill: true,
         pointRadius: 3,
-        tension: 0,
+        pointBackgroundColor: "#007aff",
+        borderWidth: 2,
+        tension: 0.1,
       },
       {
         label: "移動平均(7日)",
         data: data.map((d) => d.ema),
-        borderColor: "rgb(239, 68, 68)",
-        borderDash: [5, 5],
+        borderColor: "#ff9500",
+        borderDash: [4, 4],
         pointRadius: 0,
+        borderWidth: 1.5,
         tension: 0.4,
       },
       ...(targetWeight
@@ -46,9 +50,10 @@ export function WeightChart({ data, targetWeight }: WeightChartProps) {
             {
               label: "目標",
               data: data.map(() => targetWeight),
-              borderColor: "rgb(34, 197, 94)",
-              borderDash: [10, 5],
+              borderColor: "#34c759",
+              borderDash: [8, 4],
               pointRadius: 0,
+              borderWidth: 1.5,
               tension: 0,
             },
           ]
@@ -63,15 +68,22 @@ export function WeightChart({ data, targetWeight }: WeightChartProps) {
     plugins: {
       legend: {
         position: "bottom" as const,
-        labels: { boxWidth: 12, font: { size: 11 } },
+        labels: {
+          boxWidth: 10,
+          font: { size: 11, family: "-apple-system, BlinkMacSystemFont, sans-serif" },
+          color: "#8e8e93",
+          padding: 16,
+        },
       },
     },
     scales: {
       y: {
-        ticks: { font: { size: 10 } },
+        grid: { color: "rgba(60,60,67,0.08)" },
+        ticks: { font: { size: 10 }, color: "#8e8e93" },
       },
       x: {
-        ticks: { font: { size: 9 }, maxRotation: 45 },
+        grid: { display: false },
+        ticks: { font: { size: 9 }, color: "#8e8e93", maxRotation: 45 },
       },
     },
   };

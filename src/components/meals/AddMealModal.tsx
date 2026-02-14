@@ -26,7 +26,6 @@ export function AddMealModal({ mealType, onAdd, onClose, onSaveFavorite }: AddMe
   const [showFavInput, setShowFavInput] = useState(false);
   const [showCustom, setShowCustom] = useState(false);
 
-  // カスタム食品入力
   const [customName, setCustomName] = useState("");
   const [customEnergy, setCustomEnergy] = useState("");
   const [customProtein, setCustomProtein] = useState("");
@@ -92,15 +91,22 @@ export function AddMealModal({ mealType, onAdd, onClose, onSaveFavorite }: AddMe
   const canAddCustom = customName.trim().length > 0;
 
   return (
-    <div className="fixed inset-0 bg-black/50 z-[60] flex items-end justify-center">
-      <div className="bg-white rounded-t-2xl w-full max-w-lg max-h-[90vh] flex flex-col">
-        <div className="flex-shrink-0 border-b border-slate-200 px-4 py-3 flex justify-between items-center">
-          <h2 className="font-bold text-lg">{MEAL_TYPE_LABELS[mealType]}を追加</h2>
-          <button onClick={onClose} className="text-slate-400 text-2xl leading-none">&times;</button>
+    <div className="fixed inset-0 bg-black/40 z-[60] flex items-end justify-center">
+      <div className="bg-apple-bg rounded-t-[20px] w-full max-w-lg max-h-[90vh] flex flex-col animate-slide-up">
+        {/* ハンドルバー + ヘッダー */}
+        <div className="flex-shrink-0 pt-2 pb-3 px-5">
+          <div className="w-9 h-1 bg-apple-gray3 rounded-full mx-auto mb-3" />
+          <div className="flex justify-between items-center">
+            <button onClick={onClose} className="text-[17px] text-apple-blue active:opacity-50">
+              キャンセル
+            </button>
+            <h2 className="text-[17px] font-semibold">{MEAL_TYPE_LABELS[mealType]}を追加</h2>
+            <div className="w-16" />
+          </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
-          {/* 食品検索 */}
+        <div className="flex-1 overflow-y-auto px-4 py-2 space-y-4">
+          {/* 検索 */}
           {!showCustom && (
             <>
               <div>
@@ -114,31 +120,32 @@ export function AddMealModal({ mealType, onAdd, onClose, onSaveFavorite }: AddMe
                 />
               </div>
 
-              {/* 検索結果 */}
               {results.length > 0 && (
-                <div className="border border-slate-200 rounded-lg max-h-48 overflow-y-auto">
+                <div className="card !p-0 overflow-hidden max-h-48 overflow-y-auto">
                   {results.map((food) => (
                     <button
                       key={food.id}
-                      className="w-full text-left px-3 py-2 hover:bg-slate-50 border-b border-slate-100 last:border-0"
+                      className="w-full text-left px-4 py-3 active:bg-apple-gray6 transition-colors"
+                      style={{ boxShadow: "inset 0 -0.5px 0 0 rgba(60,60,67,0.12)" }}
                       onClick={() => handleSelectFood(food)}
                     >
                       <div className="flex justify-between items-center">
                         <div>
-                          <p className="text-sm font-medium">{food.name}</p>
-                          <p className="text-xs text-slate-400">{food.category}</p>
+                          <p className="text-[15px] font-medium">{food.name}</p>
+                          <p className="text-[13px] text-apple-tertiaryLabel">{food.category}</p>
                         </div>
-                        <p className="text-xs text-slate-500">{food.per100g.energy}kcal/100g</p>
+                        <p className="text-[13px] text-apple-secondaryLabel tabular-nums">
+                          {food.per100g.energy}kcal/100g
+                        </p>
                       </div>
                     </button>
                   ))}
                 </div>
               )}
 
-              {/* 量の入力 */}
               {results.length > 0 && (
                 <div className="flex items-center gap-2">
-                  <label className="text-sm text-slate-500">量:</label>
+                  <span className="text-[13px] text-apple-secondaryLabel">量:</span>
                   <input
                     type="number"
                     className="input-field w-24"
@@ -147,16 +154,17 @@ export function AddMealModal({ mealType, onAdd, onClose, onSaveFavorite }: AddMe
                     min={1}
                     max={5000}
                   />
-                  <span className="text-sm text-slate-500">g</span>
+                  <span className="text-[13px] text-apple-secondaryLabel">g</span>
                 </div>
               )}
 
-              {/* 検索結果がないとき or DBにないとき */}
               {query.length >= 2 && results.length === 0 && (
-                <div className="text-center py-3">
-                  <p className="text-sm text-slate-400 mb-2">「{query}」は見つかりませんでした</p>
+                <div className="text-center py-4">
+                  <p className="text-[15px] text-apple-tertiaryLabel mb-2">
+                    「{query}」は見つかりませんでした
+                  </p>
                   <button
-                    className="text-sm text-primary-600 font-medium underline"
+                    className="text-[15px] text-apple-blue font-medium active:opacity-50"
                     onClick={() => {
                       setCustomName(query);
                       setShowCustom(true);
@@ -168,9 +176,8 @@ export function AddMealModal({ mealType, onAdd, onClose, onSaveFavorite }: AddMe
                 </div>
               )}
 
-              {/* カスタム入力への切替ボタン */}
               <button
-                className="w-full text-sm text-slate-500 hover:text-primary-600 py-1"
+                className="w-full text-[15px] text-apple-secondaryLabel active:text-apple-blue py-2 transition-colors"
                 onClick={() => setShowCustom(true)}
               >
                 DBにない食品を手入力で追加
@@ -178,19 +185,21 @@ export function AddMealModal({ mealType, onAdd, onClose, onSaveFavorite }: AddMe
             </>
           )}
 
-          {/* カスタム食品入力フォーム */}
+          {/* カスタム入力 */}
           {showCustom && (
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <h3 className="text-sm font-medium text-slate-700">手入力で追加</h3>
+                <p className="text-[15px] font-semibold">手入力で追加</p>
                 <button
-                  className="text-xs text-slate-400 hover:text-slate-600"
+                  className="text-[15px] text-apple-blue active:opacity-50"
                   onClick={() => setShowCustom(false)}
                 >
                   検索に戻る
                 </button>
               </div>
-              <p className="text-xs text-slate-400">パッケージの栄養表示を参考に入力してください（1人前/1個あたり）</p>
+              <p className="text-[13px] text-apple-tertiaryLabel">
+                パッケージの栄養表示を参考に入力してください（1人前/1個あたり）
+              </p>
 
               <div>
                 <label className="label">食品名</label>
@@ -232,7 +241,7 @@ export function AddMealModal({ mealType, onAdd, onClose, onSaveFavorite }: AddMe
 
               <div className="grid grid-cols-3 gap-2">
                 <div>
-                  <label className="label text-red-500">P (g)</label>
+                  <label className="label" style={{ color: "#ff3b30" }}>P (g)</label>
                   <input
                     type="number"
                     className="input-field"
@@ -244,7 +253,7 @@ export function AddMealModal({ mealType, onAdd, onClose, onSaveFavorite }: AddMe
                   />
                 </div>
                 <div>
-                  <label className="label text-yellow-500">F (g)</label>
+                  <label className="label" style={{ color: "#ff9500" }}>F (g)</label>
                   <input
                     type="number"
                     className="input-field"
@@ -256,7 +265,7 @@ export function AddMealModal({ mealType, onAdd, onClose, onSaveFavorite }: AddMe
                   />
                 </div>
                 <div>
-                  <label className="label text-blue-500">C (g)</label>
+                  <label className="label" style={{ color: "#007aff" }}>C (g)</label>
                   <input
                     type="number"
                     className="input-field"
@@ -279,30 +288,29 @@ export function AddMealModal({ mealType, onAdd, onClose, onSaveFavorite }: AddMe
             </div>
           )}
 
-          {/* 追加済みアイテム */}
+          {/* 追加済み */}
           {items.length > 0 && (
             <div className="space-y-2">
-              <h3 className="text-sm font-medium text-slate-500">追加した食品</h3>
+              <p className="text-[13px] font-semibold text-apple-secondaryLabel">追加した食品</p>
               {items.map((item, idx) => (
-                <div key={idx} className="flex justify-between items-center bg-slate-50 rounded-lg px-3 py-2">
-                  <div>
-                    <p className="text-sm">{item.foodName} ({item.amount}g)</p>
-                    <p className="text-xs text-slate-400">
+                <div key={idx} className="flex justify-between items-center bg-white rounded-apple px-4 py-3">
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[15px] truncate">{item.foodName} ({item.amount}g)</p>
+                    <p className="text-[13px] text-apple-tertiaryLabel">
                       {item.nutrients.energy}kcal P:{item.nutrients.protein}g F:{item.nutrients.fat}g C:{item.nutrients.carbohydrate}g
                     </p>
                   </div>
                   <button
                     onClick={() => handleRemoveItem(idx)}
-                    className="text-red-400 text-sm"
+                    className="text-apple-red text-[20px] ml-3 active:opacity-50"
                   >
                     &times;
                   </button>
                 </div>
               ))}
 
-              {/* 合計 */}
-              <div className="bg-primary-50 rounded-lg px-3 py-2">
-                <p className="text-sm font-medium text-primary-700">
+              <div className="bg-apple-blue/10 rounded-apple px-4 py-3">
+                <p className="text-[15px] font-semibold text-apple-blue">
                   合計: {totals.energy}kcal | P:{totals.protein}g F:{totals.fat}g C:{totals.carbohydrate}g
                 </p>
               </div>
@@ -310,8 +318,8 @@ export function AddMealModal({ mealType, onAdd, onClose, onSaveFavorite }: AddMe
           )}
         </div>
 
-        {/* フッターボタン */}
-        <div className="flex-shrink-0 bg-white border-t border-slate-200 px-4 py-3 space-y-2">
+        {/* フッター */}
+        <div className="flex-shrink-0 bg-apple-bg border-t border-apple-separator px-4 py-3 pb-safe space-y-2">
           {showFavInput ? (
             <div className="flex gap-2">
               <input
@@ -321,10 +329,13 @@ export function AddMealModal({ mealType, onAdd, onClose, onSaveFavorite }: AddMe
                 value={favName}
                 onChange={(e) => setFavName(e.target.value)}
               />
-              <button className="btn-secondary" onClick={handleSaveFavorite}>
+              <button className="btn-primary" onClick={handleSaveFavorite}>
                 保存
               </button>
-              <button className="text-sm text-slate-400" onClick={() => setShowFavInput(false)}>
+              <button
+                className="text-[15px] text-apple-secondaryLabel px-2 active:opacity-50"
+                onClick={() => setShowFavInput(false)}
+              >
                 取消
               </button>
             </div>

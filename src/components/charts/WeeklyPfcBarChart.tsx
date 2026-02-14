@@ -19,7 +19,6 @@ interface WeeklyPfcBarChartProps {
 }
 
 export function WeeklyPfcBarChart({ mealEntries }: WeeklyPfcBarChartProps) {
-  // 直近7日間のデータ
   const days: string[] = [];
   for (let i = 6; i >= 0; i--) {
     const d = new Date();
@@ -35,17 +34,20 @@ export function WeeklyPfcBarChart({ mealEntries }: WeeklyPfcBarChartProps) {
       {
         label: "P (g)",
         data: dailyData.map((d) => d.protein),
-        backgroundColor: "rgba(239, 68, 68, 0.7)",
+        backgroundColor: "rgba(255, 59, 48, 0.7)",
+        borderRadius: 4,
       },
       {
         label: "F (g)",
         data: dailyData.map((d) => d.fat),
-        backgroundColor: "rgba(234, 179, 8, 0.7)",
+        backgroundColor: "rgba(255, 149, 0, 0.7)",
+        borderRadius: 4,
       },
       {
         label: "C (g)",
         data: dailyData.map((d) => d.carbohydrate),
-        backgroundColor: "rgba(59, 130, 246, 0.7)",
+        backgroundColor: "rgba(0, 122, 255, 0.7)",
+        borderRadius: 4,
       },
     ],
   };
@@ -57,17 +59,24 @@ export function WeeklyPfcBarChart({ mealEntries }: WeeklyPfcBarChartProps) {
     plugins: {
       legend: {
         position: "bottom" as const,
-        labels: { boxWidth: 12, font: { size: 11 } },
+        labels: {
+          boxWidth: 10,
+          font: { size: 11, family: "-apple-system, BlinkMacSystemFont, sans-serif" },
+          color: "#8e8e93",
+          padding: 16,
+        },
       },
     },
     scales: {
       x: {
         stacked: true,
-        ticks: { font: { size: 9 }, maxRotation: 45 },
+        grid: { display: false },
+        ticks: { font: { size: 9 }, color: "#8e8e93", maxRotation: 45 },
       },
       y: {
         stacked: true,
-        ticks: { font: { size: 10 } },
+        grid: { color: "rgba(60,60,67,0.08)" },
+        ticks: { font: { size: 10 }, color: "#8e8e93" },
       },
     },
   };

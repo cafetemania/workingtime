@@ -3,8 +3,8 @@ import { BottomNavigation } from "./BottomNavigation";
 
 export function AppLayout() {
   return (
-    <div className="min-h-screen bg-slate-50 max-w-lg mx-auto relative">
-      <main className="pb-16">
+    <div className="min-h-screen bg-apple-bg max-w-lg mx-auto relative">
+      <main className="pb-20">
         <Outlet />
       </main>
       <BottomNavigation />

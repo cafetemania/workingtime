@@ -27,33 +27,40 @@ export function DailySummary({
 
   return (
     <div className="card space-y-3">
-      <h3 className="text-sm font-medium text-slate-500">今日の記録</h3>
+      <p className="text-[13px] font-semibold text-apple-secondaryLabel">今日の記録</p>
 
-      <button className="w-full text-left" onClick={() => navigate("/weight")}>
-        <p className="text-xs text-slate-400">体重</p>
-        <p className="text-lg font-bold text-slate-800">
-          {todayWeight ? `${todayWeight.weight} kg` : "-- kg"}
+      <button
+        className="w-full text-left active:opacity-60 transition-opacity"
+        onClick={() => navigate("/weight")}
+      >
+        <p className="text-[11px] text-apple-tertiaryLabel uppercase tracking-wide">体重</p>
+        <p className="text-[22px] font-bold text-apple-label tracking-tight">
+          {todayWeight ? `${todayWeight.weight}` : "--"}
+          <span className="text-[13px] font-normal text-apple-tertiaryLabel ml-0.5">kg</span>
         </p>
         {!todayWeight && (
-          <p className="text-xs text-primary-500">タップして記録</p>
+          <p className="text-[11px] text-apple-blue font-medium">タップして記録</p>
         )}
       </button>
 
       <div>
-        <p className="text-xs text-slate-400">摂取カロリー</p>
-        <p className="text-lg font-bold text-slate-800">{todayNutrients.energy} kcal</p>
+        <p className="text-[11px] text-apple-tertiaryLabel uppercase tracking-wide">カロリー</p>
+        <p className="text-[22px] font-bold text-apple-label tracking-tight">
+          {todayNutrients.energy}
+          <span className="text-[13px] font-normal text-apple-tertiaryLabel ml-0.5">kcal</span>
+        </p>
       </div>
 
       <div>
-        <p className="text-xs text-slate-400">水分</p>
+        <p className="text-[11px] text-apple-tertiaryLabel uppercase tracking-wide mb-1.5">水分</p>
         <div className="flex items-center gap-2">
-          <div className="flex-1 bg-slate-100 rounded-full h-2">
+          <div className="flex-1 bg-apple-gray5 rounded-full h-[6px]">
             <div
-              className="bg-blue-500 rounded-full h-2 transition-all"
+              className="bg-apple-teal rounded-full h-[6px] transition-all duration-500"
               style={{ width: `${hydrationPercent}%` }}
             />
           </div>
-          <span className="text-xs text-slate-500">{todayHydration}ml</span>
+          <span className="text-[11px] text-apple-tertiaryLabel font-medium">{todayHydration}ml</span>
         </div>
       </div>
     </div>

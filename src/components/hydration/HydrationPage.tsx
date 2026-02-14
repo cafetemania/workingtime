@@ -1,8 +1,7 @@
-import { Header } from "../layout/Header";
+import { useState } from "react";
 import { useAppData } from "../../hooks/useAppData";
 import { getToday } from "../../utils/dateUtils";
 import { HYDRATION_PRESETS } from "../../data/phaseConfig";
-import { useState } from "react";
 
 export function HydrationPage() {
   const { data, addHydrationEntry, deleteHydrationEntry } = useAppData();
@@ -27,52 +26,61 @@ export function HydrationPage() {
   };
 
   return (
-    <div>
-      <Header title="水分記録" />
-      <div className="px-4 py-4 space-y-4">
-        {/* 進捗 */}
+    <div className="animate-fade-in">
+      <div className="px-5 pt-14 pb-2">
+        <h1 className="large-title">水分</h1>
+      </div>
+
+      <div className="px-4 pb-6 space-y-4">
+        {/* 円形プログレス */}
         <div className="card text-center">
-          <div className="relative w-32 h-32 mx-auto mb-3">
+          <div className="relative w-36 h-36 mx-auto mb-3">
             <svg className="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
               <circle
                 cx="60"
                 cy="60"
-                r="54"
+                r="52"
                 fill="none"
-                stroke="#e2e8f0"
-                strokeWidth="8"
+                stroke="#e5e5ea"
+                strokeWidth="10"
               />
               <circle
                 cx="60"
                 cy="60"
-                r="54"
+                r="52"
                 fill="none"
-                stroke="#3b82f6"
-                strokeWidth="8"
+                stroke="#5ac8fa"
+                strokeWidth="10"
                 strokeLinecap="round"
-                strokeDasharray={`${(percent / 100) * 339.3} 339.3`}
+                strokeDasharray={`${(percent / 100) * 326.7} 326.7`}
+                className="transition-all duration-700"
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <p className="text-2xl font-bold text-primary-600">{totalMl}</p>
-              <p className="text-xs text-slate-400">/ {goalMl} ml</p>
+              <p className="text-[36px] font-bold text-apple-teal tracking-tight">{totalMl}</p>
+              <p className="text-[13px] text-apple-tertiaryLabel -mt-1">/ {goalMl} ml</p>
             </div>
           </div>
-          <p className="text-sm text-slate-500">達成率 {percent}%</p>
+          <p className="text-[15px] text-apple-secondaryLabel">
+            達成率 <span className="font-semibold text-apple-teal">{percent}%</span>
+          </p>
         </div>
 
-        {/* プリセットボタン */}
+        {/* クイック追加 */}
         <div className="card">
-          <h3 className="text-sm font-medium text-slate-500 mb-3">クイック追加</h3>
+          <p className="text-[13px] font-semibold text-apple-secondaryLabel mb-3">クイック追加</p>
           <div className="grid grid-cols-2 gap-2">
             {HYDRATION_PRESETS.map((preset) => (
               <button
                 key={preset.label}
-                className="btn-secondary text-sm py-3 flex items-center justify-center gap-2"
+                className="bg-apple-gray6 rounded-apple px-3 py-3 flex items-center justify-center gap-2 active:scale-95 transition-transform"
                 onClick={() => handleQuickAdd(preset.amount, preset.label)}
               >
-                <span>{preset.icon}</span>
-                <span>{preset.label} ({preset.amount}ml)</span>
+                <span className="text-[18px]">{preset.icon}</span>
+                <div className="text-left">
+                  <p className="text-[13px] font-medium">{preset.label}</p>
+                  <p className="text-[11px] text-apple-tertiaryLabel">{preset.amount}ml</p>
+                </div>
               </button>
             ))}
           </div>
@@ -93,26 +101,32 @@ export function HydrationPage() {
           </form>
         </div>
 
-        {/* 今日の記録 */}
+        {/* 記録一覧 */}
         <div className="card">
-          <h3 className="text-sm font-medium text-slate-500 mb-2">今日の記録</h3>
+          <p className="text-[13px] font-semibold text-apple-secondaryLabel mb-2">今日の記録</p>
           {todayEntries.length === 0 ? (
-            <p className="text-sm text-slate-400 text-center py-4">まだ記録がありません</p>
+            <p className="text-[15px] text-apple-tertiaryLabel text-center py-6">
+              まだ記録がありません
+            </p>
           ) : (
-            <div className="space-y-1">
+            <div>
               {[...todayEntries].reverse().map((entry) => (
-                <div key={entry.id} className="flex justify-between items-center py-1.5 border-b border-slate-100 last:border-0">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm">{entry.type}</span>
-                    <span className="text-xs text-slate-400">
+                <div
+                  key={entry.id}
+                  className="flex justify-between items-center py-3"
+                  style={{ boxShadow: "inset 0 -0.5px 0 0 rgba(60,60,67,0.12)" }}
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-[15px]">{entry.type}</span>
+                    <span className="text-[13px] text-apple-tertiaryLabel tabular-nums">
                       {new Date(entry.timestamp).toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" })}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium">{entry.amount}ml</span>
+                  <div className="flex items-center gap-3">
+                    <span className="text-[15px] font-semibold tabular-nums">{entry.amount}ml</span>
                     <button
                       onClick={() => deleteHydrationEntry(entry.id)}
-                      className="text-xs text-red-400"
+                      className="text-[13px] text-apple-red active:opacity-50"
                     >
                       削除
                     </button>

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Header } from "../layout/Header";
 import { useAppData } from "../../hooks/useAppData";
 import { getToday, formatDateShort } from "../../utils/dateUtils";
 import { sumDailyNutrients } from "../../services/pfcCalculator";
@@ -11,6 +10,13 @@ const MEAL_TYPE_LABELS: Record<MealType, string> = {
   lunch: "昼食",
   dinner: "夕食",
   snack: "間食",
+};
+
+const MEAL_ICONS: Record<MealType, string> = {
+  breakfast: "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707",
+  lunch: "M12 6v6m0 0v6m0-6h6m-6 0H6",
+  dinner: "M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z",
+  snack: "M13 10V3L4 14h7v7l9-11h-7z",
 };
 
 export function MealsPage() {
@@ -32,32 +38,35 @@ export function MealsPage() {
   };
 
   return (
-    <div>
-      <Header title="食事記録" />
-      <div className="px-4 py-4 space-y-4">
-        {/* 今日の栄養サマリー */}
+    <div className="animate-fade-in">
+      <div className="px-5 pt-14 pb-2">
+        <h1 className="large-title">食事</h1>
+      </div>
+
+      <div className="px-4 pb-6 space-y-4">
+        {/* 栄養サマリー */}
         <div className="card">
-          <h3 className="text-sm font-medium text-slate-500 mb-2">今日の栄養摂取</h3>
+          <p className="text-[13px] font-semibold text-apple-secondaryLabel mb-3">今日の栄養</p>
           <div className="grid grid-cols-4 gap-2 text-center">
             <div>
-              <p className="text-xs text-slate-400">カロリー</p>
-              <p className="text-lg font-bold text-slate-800">{todayNutrients.energy}</p>
-              <p className="text-xs text-slate-400">kcal</p>
+              <p className="text-[11px] text-apple-tertiaryLabel uppercase">Cal</p>
+              <p className="text-[22px] font-bold tracking-tight">{todayNutrients.energy}</p>
+              <p className="text-[11px] text-apple-tertiaryLabel">kcal</p>
             </div>
             <div>
-              <p className="text-xs text-red-400">P</p>
-              <p className="text-lg font-bold text-red-500">{todayNutrients.protein}</p>
-              <p className="text-xs text-slate-400">g</p>
+              <p className="text-[11px] text-apple-red font-semibold">P</p>
+              <p className="text-[22px] font-bold text-apple-red tracking-tight">{todayNutrients.protein}</p>
+              <p className="text-[11px] text-apple-tertiaryLabel">g</p>
             </div>
             <div>
-              <p className="text-xs text-yellow-400">F</p>
-              <p className="text-lg font-bold text-yellow-500">{todayNutrients.fat}</p>
-              <p className="text-xs text-slate-400">g</p>
+              <p className="text-[11px] text-apple-orange font-semibold">F</p>
+              <p className="text-[22px] font-bold text-apple-orange tracking-tight">{todayNutrients.fat}</p>
+              <p className="text-[11px] text-apple-tertiaryLabel">g</p>
             </div>
             <div>
-              <p className="text-xs text-blue-400">C</p>
-              <p className="text-lg font-bold text-blue-500">{todayNutrients.carbohydrate}</p>
-              <p className="text-xs text-slate-400">g</p>
+              <p className="text-[11px] text-apple-blue font-semibold">C</p>
+              <p className="text-[22px] font-bold text-apple-blue tracking-tight">{todayNutrients.carbohydrate}</p>
+              <p className="text-[11px] text-apple-tertiaryLabel">g</p>
             </div>
           </div>
         </div>
@@ -67,69 +76,80 @@ export function MealsPage() {
           {(Object.keys(MEAL_TYPE_LABELS) as MealType[]).map((type) => (
             <button
               key={type}
-              className="btn-secondary text-sm py-3"
+              className="card !p-3 text-center active:scale-95 transition-transform"
               onClick={() => {
                 setSelectedMealType(type);
                 setShowModal(true);
               }}
             >
-              + {MEAL_TYPE_LABELS[type]}
+              <svg className="w-6 h-6 mx-auto text-apple-blue mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d={MEAL_ICONS[type]} />
+              </svg>
+              <p className="text-[11px] font-medium text-apple-secondaryLabel">{MEAL_TYPE_LABELS[type]}</p>
             </button>
           ))}
         </div>
 
-        {/* お気に入りメニュー */}
+        {/* お気に入り */}
         {data.favorites.length > 0 && (
           <div className="card">
-            <h3 className="text-sm font-medium text-slate-500 mb-2">お気に入り</h3>
-            <div className="space-y-2">
-              {data.favorites.map((fav) => (
-                <div key={fav.id} className="flex items-center justify-between py-2 border-b border-slate-100 last:border-0">
-                  <button
-                    className="text-sm text-primary-600 font-medium text-left flex-1"
-                    onClick={() => handleAddMeal("snack", [...fav.items])}
-                  >
-                    {fav.name}
-                  </button>
-                  <button
-                    onClick={() => deleteFavorite(fav.id)}
-                    className="text-xs text-red-400 hover:text-red-600 ml-2"
-                  >
-                    削除
-                  </button>
-                </div>
-              ))}
-            </div>
+            <p className="text-[13px] font-semibold text-apple-secondaryLabel mb-2">お気に入り</p>
+            {data.favorites.map((fav) => (
+              <div
+                key={fav.id}
+                className="flex items-center justify-between py-3"
+                style={{ boxShadow: "inset 0 -0.5px 0 0 rgba(60,60,67,0.12)" }}
+              >
+                <button
+                  className="text-[15px] text-apple-blue font-medium text-left flex-1 active:opacity-50"
+                  onClick={() => handleAddMeal("snack", [...fav.items])}
+                >
+                  {fav.name}
+                </button>
+                <button
+                  onClick={() => deleteFavorite(fav.id)}
+                  className="text-[15px] text-apple-red active:opacity-50 ml-3"
+                >
+                  削除
+                </button>
+              </div>
+            ))}
           </div>
         )}
 
-        {/* 今日の食事一覧 */}
+        {/* 今日の記録 */}
         <div className="card">
-          <h3 className="text-sm font-medium text-slate-500 mb-2">
+          <p className="text-[13px] font-semibold text-apple-secondaryLabel mb-2">
             今日の食事 ({formatDateShort(today)})
-          </h3>
+          </p>
           {todayMeals.length === 0 ? (
-            <p className="text-sm text-slate-400 text-center py-4">まだ記録がありません</p>
+            <p className="text-[15px] text-apple-tertiaryLabel text-center py-6">
+              まだ記録がありません
+            </p>
           ) : (
-            <div className="space-y-3">
+            <div>
               {todayMeals.map((meal) => (
-                <div key={meal.id} className="border-b border-slate-100 pb-3 last:border-0">
+                <div
+                  key={meal.id}
+                  className="py-3"
+                  style={{ boxShadow: "inset 0 -0.5px 0 0 rgba(60,60,67,0.12)" }}
+                >
                   <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium text-slate-700">
+                    <span className="text-[15px] font-semibold">
                       {MEAL_TYPE_LABELS[meal.mealType]}
                     </span>
                     <button
                       onClick={() => deleteMealEntry(meal.id)}
-                      className="text-xs text-red-400 hover:text-red-600"
+                      className="text-[13px] text-apple-red active:opacity-50"
                     >
                       削除
                     </button>
                   </div>
-                  <ul className="mt-1 space-y-1">
+                  <ul className="mt-1.5 space-y-1">
                     {meal.items.map((item, idx) => (
-                      <li key={idx} className="text-xs text-slate-500 flex justify-between">
+                      <li key={idx} className="text-[13px] text-apple-secondaryLabel flex justify-between">
                         <span>{item.foodName} ({item.amount}g)</span>
-                        <span>{item.nutrients.energy}kcal</span>
+                        <span className="tabular-nums">{item.nutrients.energy}kcal</span>
                       </li>
                     ))}
                   </ul>

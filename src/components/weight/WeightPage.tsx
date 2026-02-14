@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Header } from "../layout/Header";
 import { useAppData } from "../../hooks/useAppData";
 import { getToday, formatDateShort } from "../../utils/dateUtils";
 import { getWeightWithEMA } from "../../services/weightAnalyzer";
@@ -25,17 +24,23 @@ export function WeightPage() {
     .slice(0, 10);
 
   return (
-    <div>
-      <Header title="体重記録" />
-      <div className="px-4 py-4 space-y-4">
-        {/* 体重入力フォーム */}
+    <div className="animate-fade-in">
+      <div className="px-5 pt-14 pb-2">
+        <h1 className="large-title">体重</h1>
+      </div>
+
+      <div className="px-4 pb-6 space-y-4">
+        {/* 体重入力 */}
         <div className="card">
-          <h3 className="text-sm font-medium text-slate-500 mb-3">
-            {todayEntry ? "今日の体重（記録済み）" : "今朝の体重を入力"}
-          </h3>
+          <p className="text-[13px] font-semibold text-apple-secondaryLabel mb-3">
+            {todayEntry ? "今日の体重" : "今朝の体重を入力"}
+          </p>
           {todayEntry ? (
-            <div className="text-center">
-              <p className="text-4xl font-bold text-primary-600">{todayEntry.weight} kg</p>
+            <div className="text-center py-2">
+              <p className="text-[48px] font-bold text-apple-blue tracking-tight">
+                {todayEntry.weight}
+              </p>
+              <p className="text-[15px] text-apple-tertiaryLabel -mt-1">kg</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="flex gap-2">
@@ -56,34 +61,37 @@ export function WeightPage() {
           )}
         </div>
 
-        {/* 体重グラフ */}
+        {/* チャート */}
         {weightWithEma.length > 1 && (
           <div className="card">
-            <h3 className="text-sm font-medium text-slate-500 mb-3">体重推移</h3>
+            <p className="text-[13px] font-semibold text-apple-secondaryLabel mb-3">推移</p>
             <WeightChart data={weightWithEma} targetWeight={data.profile?.targetWeight} />
           </div>
         )}
 
-        {/* 最近の記録 */}
+        {/* 履歴 */}
         <div className="card">
-          <h3 className="text-sm font-medium text-slate-500 mb-3">最近の記録</h3>
+          <p className="text-[13px] font-semibold text-apple-secondaryLabel mb-3">履歴</p>
           {recentEntries.length === 0 ? (
-            <p className="text-sm text-slate-400 text-center py-4">まだ記録がありません</p>
+            <p className="text-[15px] text-apple-tertiaryLabel text-center py-6">
+              まだ記録がありません
+            </p>
           ) : (
-            <div className="space-y-2">
+            <div>
               {recentEntries.map((entry) => (
                 <div
                   key={entry.id}
-                  className="flex justify-between items-center py-2 border-b border-slate-100 last:border-0"
+                  className="flex justify-between items-center py-3"
+                  style={{ boxShadow: "inset 0 -0.5px 0 0 rgba(60,60,67,0.12)" }}
                 >
-                  <span className="text-sm text-slate-600">
+                  <span className="text-[15px] text-apple-secondaryLabel">
                     {formatDateShort(entry.date)}
                   </span>
-                  <div className="flex items-center gap-3">
-                    <span className="font-medium">{entry.weight} kg</span>
+                  <div className="flex items-center gap-4">
+                    <span className="text-[17px] font-semibold tabular-nums">{entry.weight} kg</span>
                     <button
                       onClick={() => deleteWeightEntry(entry.id)}
-                      className="text-xs text-red-400 hover:text-red-600"
+                      className="text-[15px] text-apple-red active:opacity-50"
                     >
                       削除
                     </button>

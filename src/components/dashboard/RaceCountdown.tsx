@@ -19,17 +19,25 @@ export function RaceCountdown({ raceName, phaseInfo }: RaceCountdownProps) {
         : `レース後 ${Math.abs(daysUntilRace)} 日`;
 
   return (
-    <div className="card bg-gradient-to-r from-primary-600 to-primary-500 text-white">
-      <div className="flex justify-between items-start">
-        <div>
-          <p className="text-sm text-primary-100">{raceName}</p>
-          <p className="text-3xl font-bold mt-1">{countdownText}</p>
+    <div className="rounded-apple-xl overflow-hidden"
+      style={{
+        background: "linear-gradient(135deg, #007aff 0%, #5856d6 100%)",
+      }}
+    >
+      <div className="px-5 py-5">
+        <div className="flex justify-between items-start">
+          <div>
+            <p className="text-[13px] text-white/70 font-medium">{raceName}</p>
+            <p className="text-[40px] font-bold text-white tracking-tight leading-tight mt-1">
+              {countdownText}
+            </p>
+          </div>
+          <div className="bg-white/20 backdrop-blur-sm rounded-full px-3 py-1.5">
+            <p className="text-[13px] font-semibold text-white">{label}</p>
+          </div>
         </div>
-        <div className="bg-white/20 rounded-lg px-3 py-1">
-          <p className="text-sm font-medium">{label}</p>
-        </div>
+        <p className="text-[13px] text-white/70 mt-2">{description}</p>
       </div>
-      <p className="text-sm text-primary-100 mt-2">{description}</p>
     </div>
   );
 }

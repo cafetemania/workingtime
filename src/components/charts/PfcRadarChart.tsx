@@ -22,7 +22,11 @@ interface PfcRadarChartProps {
 
 export function PfcRadarChart({ mealEntries, phaseInfo, weight }: PfcRadarChartProps) {
   if (!phaseInfo) {
-    return <p className="text-sm text-slate-400 text-center py-8">レース情報を設定してください</p>;
+    return (
+      <p className="text-[15px] text-apple-tertiaryLabel text-center py-8">
+        レース情報を設定してください
+      </p>
+    );
   }
 
   const today = getToday();
@@ -39,17 +43,17 @@ export function PfcRadarChart({ mealEntries, phaseInfo, weight }: PfcRadarChartP
           summary.achievementRate.fat,
           summary.achievementRate.carbohydrate,
         ],
-        backgroundColor: "rgba(59, 130, 246, 0.2)",
-        borderColor: "rgb(59, 130, 246)",
-        pointBackgroundColor: "rgb(59, 130, 246)",
+        backgroundColor: "rgba(0, 122, 255, 0.15)",
+        borderColor: "#007aff",
+        pointBackgroundColor: "#007aff",
         borderWidth: 2,
       },
       {
         label: "目標 (100%)",
         data: [100, 100, 100],
-        backgroundColor: "rgba(34, 197, 94, 0.1)",
-        borderColor: "rgb(34, 197, 94)",
-        borderDash: [5, 5],
+        backgroundColor: "rgba(52, 199, 89, 0.08)",
+        borderColor: "#34c759",
+        borderDash: [4, 4],
         pointRadius: 0,
         borderWidth: 1,
       },
@@ -63,14 +67,23 @@ export function PfcRadarChart({ mealEntries, phaseInfo, weight }: PfcRadarChartP
       r: {
         beginAtZero: true,
         max: 150,
-        ticks: { stepSize: 50, font: { size: 10 } },
-        pointLabels: { font: { size: 12 } },
+        ticks: { stepSize: 50, font: { size: 10 }, color: "#8e8e93" },
+        pointLabels: {
+          font: { size: 12, family: "-apple-system, BlinkMacSystemFont, sans-serif" },
+          color: "#3c3c43",
+        },
+        grid: { color: "rgba(60,60,67,0.08)" },
       },
     },
     plugins: {
       legend: {
         position: "bottom" as const,
-        labels: { boxWidth: 12, font: { size: 11 } },
+        labels: {
+          boxWidth: 10,
+          font: { size: 11, family: "-apple-system, BlinkMacSystemFont, sans-serif" },
+          color: "#8e8e93",
+          padding: 16,
+        },
       },
     },
   };
@@ -78,18 +91,24 @@ export function PfcRadarChart({ mealEntries, phaseInfo, weight }: PfcRadarChartP
   return (
     <div>
       <Radar data={chartData} options={options} />
-      <div className="mt-3 grid grid-cols-3 gap-2 text-center text-xs">
-        <div>
-          <p className="text-slate-400">P (実/目標)</p>
-          <p className="font-medium">{summary.actual.protein}g / {target.protein}g</p>
+      <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+        <div className="bg-apple-red/10 rounded-apple py-2">
+          <p className="text-[11px] text-apple-tertiaryLabel">P (実/目標)</p>
+          <p className="text-[13px] font-semibold text-apple-red tabular-nums">
+            {summary.actual.protein}g / {target.protein}g
+          </p>
         </div>
-        <div>
-          <p className="text-slate-400">F (実/目標)</p>
-          <p className="font-medium">{summary.actual.fat}g / {target.fat}g</p>
+        <div className="bg-apple-orange/10 rounded-apple py-2">
+          <p className="text-[11px] text-apple-tertiaryLabel">F (実/目標)</p>
+          <p className="text-[13px] font-semibold text-apple-orange tabular-nums">
+            {summary.actual.fat}g / {target.fat}g
+          </p>
         </div>
-        <div>
-          <p className="text-slate-400">C (実/目標)</p>
-          <p className="font-medium">{summary.actual.carbohydrate}g / {target.carbohydrate}g</p>
+        <div className="bg-apple-blue/10 rounded-apple py-2">
+          <p className="text-[11px] text-apple-tertiaryLabel">C (実/目標)</p>
+          <p className="text-[13px] font-semibold text-apple-blue tabular-nums">
+            {summary.actual.carbohydrate}g / {target.carbohydrate}g
+          </p>
         </div>
       </div>
     </div>

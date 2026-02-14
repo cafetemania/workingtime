@@ -5,10 +5,12 @@ interface HeaderProps {
 
 export function Header({ title, subtitle }: HeaderProps) {
   return (
-    <header className="bg-primary-600 text-white px-4 py-3 sticky top-0 z-40">
-      <div className="max-w-lg mx-auto">
-        <h1 className="text-lg font-bold">{title}</h1>
-        {subtitle && <p className="text-sm text-primary-100">{subtitle}</p>}
+    <header className="glass sticky top-0 z-40 border-b border-apple-separator">
+      <div className="max-w-lg mx-auto px-4 py-2">
+        <h1 className="text-[17px] font-semibold text-center text-apple-label">{title}</h1>
+        {subtitle && (
+          <p className="text-[13px] text-apple-secondaryLabel text-center">{subtitle}</p>
+        )}
       </div>
     </header>
   );

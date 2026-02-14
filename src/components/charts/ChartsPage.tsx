@@ -1,4 +1,3 @@
-import { Header } from "../layout/Header";
 import { useAppData } from "../../hooks/useAppData";
 import { useTrainingPhase } from "../../hooks/useTrainingPhase";
 import { PfcRadarChart } from "./PfcRadarChart";
@@ -12,12 +11,14 @@ export function ChartsPage() {
   const weightWithEma = getWeightWithEMA(data.weightEntries);
 
   return (
-    <div>
-      <Header title="チャート分析" />
-      <div className="px-4 py-4 space-y-4">
-        {/* PFCレーダーチャート */}
+    <div className="animate-fade-in">
+      <div className="px-5 pt-14 pb-2">
+        <h1 className="large-title">分析</h1>
+      </div>
+
+      <div className="px-4 pb-6 space-y-4">
         <div className="card">
-          <h3 className="text-sm font-medium text-slate-500 mb-3">PFCバランス（今日）</h3>
+          <p className="text-[13px] font-semibold text-apple-secondaryLabel mb-3">PFCバランス（今日）</p>
           <PfcRadarChart
             mealEntries={data.mealEntries}
             phaseInfo={phaseInfo}
@@ -25,17 +26,15 @@ export function ChartsPage() {
           />
         </div>
 
-        {/* 体重推移 */}
         {weightWithEma.length > 1 && (
           <div className="card">
-            <h3 className="text-sm font-medium text-slate-500 mb-3">体重推移</h3>
+            <p className="text-[13px] font-semibold text-apple-secondaryLabel mb-3">体重推移</p>
             <WeightChart data={weightWithEma} targetWeight={data.profile?.targetWeight} />
           </div>
         )}
 
-        {/* 週間PFC棒グラフ */}
         <div className="card">
-          <h3 className="text-sm font-medium text-slate-500 mb-3">週間PFC推移</h3>
+          <p className="text-[13px] font-semibold text-apple-secondaryLabel mb-3">週間PFC推移</p>
           <WeeklyPfcBarChart mealEntries={data.mealEntries} />
         </div>
       </div>

@@ -8,6 +8,12 @@ interface MiniPfcRadarProps {
   readonly weight: number;
 }
 
+const PFC_COLORS = {
+  P: { bar: "#ff3b30", bg: "rgba(255,59,48,0.12)", text: "text-apple-red" },
+  F: { bar: "#ff9500", bg: "rgba(255,149,0,0.12)", text: "text-apple-orange" },
+  C: { bar: "#007aff", bg: "rgba(0,122,255,0.12)", text: "text-apple-blue" },
+} as const;
+
 export function MiniPfcRadar({ mealEntries, phaseInfo, weight }: MiniPfcRadarProps) {
   if (!phaseInfo) return null;
 
@@ -16,34 +22,40 @@ export function MiniPfcRadar({ mealEntries, phaseInfo, weight }: MiniPfcRadarPro
   const summary = getDailyPfcSummary(mealEntries, today, target);
 
   const items = [
-    { label: "P", value: summary.achievementRate.protein, color: "text-red-500" },
-    { label: "F", value: summary.achievementRate.fat, color: "text-yellow-500" },
-    { label: "C", value: summary.achievementRate.carbohydrate, color: "text-blue-500" },
+    { label: "P" as const, value: summary.achievementRate.protein },
+    { label: "F" as const, value: summary.achievementRate.fat },
+    { label: "C" as const, value: summary.achievementRate.carbohydrate },
   ];
 
   return (
     <div className="card space-y-3">
-      <h3 className="text-sm font-medium text-slate-500">PFCバランス</h3>
-      {items.map((item) => (
-        <div key={item.label}>
-          <div className="flex justify-between text-xs mb-1">
-            <span className={`font-bold ${item.color}`}>{item.label}</span>
-            <span className="text-slate-500">{item.value}%</span>
+      <p className="text-[13px] font-semibold text-apple-secondaryLabel">PFCバランス</p>
+      {items.map((item) => {
+        const colors = PFC_COLORS[item.label];
+        return (
+          <div key={item.label}>
+            <div className="flex justify-between items-center mb-1.5">
+              <span
+                className={`text-[13px] font-bold ${colors.text}`}
+              >
+                {item.label}
+              </span>
+              <span className="text-[13px] font-medium text-apple-secondaryLabel tabular-nums">
+                {item.value}%
+              </span>
+            </div>
+            <div className="rounded-full h-[6px]" style={{ backgroundColor: colors.bg }}>
+              <div
+                className="rounded-full h-[6px] transition-all duration-500"
+                style={{
+                  width: `${Math.min(100, item.value)}%`,
+                  backgroundColor: colors.bar,
+                }}
+              />
+            </div>
           </div>
-          <div className="bg-slate-100 rounded-full h-2">
-            <div
-              className={`rounded-full h-2 transition-all ${
-                item.label === "P"
-                  ? "bg-red-400"
-                  : item.label === "F"
-                    ? "bg-yellow-400"
-                    : "bg-blue-400"
-              }`}
-              style={{ width: `${Math.min(100, item.value)}%` }}
-            />
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

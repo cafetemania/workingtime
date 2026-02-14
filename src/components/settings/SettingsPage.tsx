@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Header } from "../layout/Header";
 import { useAppData } from "../../hooks/useAppData";
 import { downloadAsJson, importData } from "../../services/dataExporter";
 import { loadAppData } from "../../services/storageService";
@@ -46,33 +45,35 @@ export function SettingsPage() {
   };
 
   return (
-    <div>
-      <Header title="設定" />
-      <div className="px-4 py-4 space-y-4">
+    <div className="animate-fade-in">
+      <div className="px-5 pt-14 pb-2">
+        <h1 className="large-title">設定</h1>
+      </div>
+
+      <div className="px-4 pb-6 space-y-5">
         {/* プロフィール */}
         {data.profile && (
-          <div className="card">
-            <h3 className="text-sm font-medium text-slate-500 mb-3">プロフィール</h3>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-slate-500">レース</span>
-                <span>{data.profile.raceName}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">レース日</span>
-                <span>{data.profile.raceDate}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">目標体重</span>
-                <span>{data.profile.targetWeight} kg</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">身長</span>
-                <span>{data.profile.height} cm</span>
-              </div>
+          <div>
+            <p className="section-header">プロフィール</p>
+            <div className="card !p-0 overflow-hidden">
+              {[
+                { label: "レース", value: data.profile.raceName },
+                { label: "レース日", value: data.profile.raceDate },
+                { label: "目標体重", value: `${data.profile.targetWeight} kg` },
+                { label: "身長", value: `${data.profile.height} cm` },
+              ].map((item, idx) => (
+                <div
+                  key={idx}
+                  className="flex justify-between items-center px-4 py-3"
+                  style={idx < 3 ? { boxShadow: "inset 0 -0.5px 0 0 rgba(60,60,67,0.12)" } : undefined}
+                >
+                  <span className="text-[15px] text-apple-label">{item.label}</span>
+                  <span className="text-[15px] text-apple-secondaryLabel">{item.value}</span>
+                </div>
+              ))}
             </div>
             <button
-              className="btn-secondary w-full mt-3 text-sm"
+              className="w-full text-[15px] text-apple-blue font-medium text-center py-3 mt-2 active:opacity-50"
               onClick={() => navigate("/onboarding")}
             >
               プロフィールを編集
@@ -81,13 +82,15 @@ export function SettingsPage() {
         )}
 
         {/* 目標設定 */}
-        <div className="card">
-          <h3 className="text-sm font-medium text-slate-500 mb-3">目標設定</h3>
-          <div>
-            <label className="label">1日の水分目標 (ml)</label>
+        <div>
+          <p className="section-header">目標</p>
+          <div className="card">
+            <label className="text-[13px] text-apple-secondaryLabel font-medium">
+              1日の水分目標 (ml)
+            </label>
             <input
               type="number"
-              className="input-field"
+              className="input-field mt-2"
               value={data.settings.dailyHydrationGoal}
               onChange={handleHydrationGoalChange}
               min={500}
@@ -98,14 +101,17 @@ export function SettingsPage() {
         </div>
 
         {/* データ管理 */}
-        <div className="card">
-          <h3 className="text-sm font-medium text-slate-500 mb-3">データ管理</h3>
-          <div className="space-y-2">
-            <button className="btn-primary w-full text-sm" onClick={handleExport}>
-              データをエクスポート (JSON)
+        <div>
+          <p className="section-header">データ管理</p>
+          <div className="card space-y-3">
+            <button
+              className="btn-primary w-full"
+              onClick={handleExport}
+            >
+              データをエクスポート
             </button>
 
-            <label className="btn-secondary w-full text-sm block text-center cursor-pointer">
+            <label className="btn-secondary w-full block text-center cursor-pointer">
               データをインポート
               <input
                 type="file"
@@ -114,22 +120,30 @@ export function SettingsPage() {
                 onChange={handleImport}
               />
             </label>
-          </div>
 
-          {importSuccess && (
-            <p className="text-sm text-green-600 mt-2">インポートが完了しました</p>
-          )}
-          {importError && (
-            <p className="text-sm text-red-600 mt-2">{importError}</p>
-          )}
+            {importSuccess && (
+              <div className="bg-apple-green/10 rounded-apple px-4 py-2">
+                <p className="text-[13px] text-apple-green font-medium text-center">
+                  インポートが完了しました
+                </p>
+              </div>
+            )}
+            {importError && (
+              <div className="bg-apple-red/10 rounded-apple px-4 py-2">
+                <p className="text-[13px] text-apple-red font-medium text-center">{importError}</p>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* アプリ情報 */}
-        <div className="card">
-          <h3 className="text-sm font-medium text-slate-500 mb-3">アプリ情報</h3>
-          <div className="space-y-1 text-sm text-slate-500">
-            <p>マラソン栄養管理 v0.1.0</p>
-            <p>データはブラウザのlocalStorageに保存されます</p>
+        <div>
+          <p className="section-header">アプリ情報</p>
+          <div className="card">
+            <p className="text-[15px] text-apple-secondaryLabel">マラソン栄養管理 v0.1.0</p>
+            <p className="text-[13px] text-apple-tertiaryLabel mt-1">
+              データはブラウザのlocalStorageに保存されます
+            </p>
           </div>
         </div>
       </div>

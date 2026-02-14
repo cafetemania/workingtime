@@ -52,48 +52,45 @@ export function OnboardingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-primary-600 flex flex-col">
+    <div className="min-h-screen bg-apple-bg flex flex-col">
       {/* ステップインジケーター */}
-      <div className="flex justify-center gap-2 pt-8 pb-4">
+      <div className="flex justify-center gap-3 pt-16 pb-6">
         {[1, 2, 3].map((s) => (
           <div
             key={s}
-            className={`w-3 h-3 rounded-full transition-colors ${
-              s <= step ? "bg-white" : "bg-primary-400"
+            className={`h-1 rounded-full transition-all duration-300 ${
+              s <= step ? "w-8 bg-apple-blue" : "w-3 bg-apple-gray4"
             }`}
           />
         ))}
       </div>
 
-      <div className="flex-1 bg-white rounded-t-3xl px-6 pt-8 pb-6">
+      <div className="flex-1 px-6 pb-10">
         {step === 1 && (
-          <div className="space-y-5">
-            <h2 className="text-xl font-bold text-slate-800">基本情報</h2>
-            <p className="text-sm text-slate-500">あなたの体格情報を教えてください</p>
+          <div className="space-y-6 animate-fade-in">
+            <div>
+              <h2 className="page-title">基本情報</h2>
+              <p className="text-[15px] text-apple-secondaryLabel mt-1">
+                あなたの体格情報を教えてください
+              </p>
+            </div>
 
             <div>
               <label className="label">性別</label>
               <div className="flex gap-3">
-                <button
-                  className={`flex-1 py-2 rounded-lg border-2 font-medium transition-colors ${
-                    gender === "male"
-                      ? "border-primary-600 bg-primary-50 text-primary-600"
-                      : "border-slate-200 text-slate-500"
-                  }`}
-                  onClick={() => setGender("male")}
-                >
-                  男性
-                </button>
-                <button
-                  className={`flex-1 py-2 rounded-lg border-2 font-medium transition-colors ${
-                    gender === "female"
-                      ? "border-primary-600 bg-primary-50 text-primary-600"
-                      : "border-slate-200 text-slate-500"
-                  }`}
-                  onClick={() => setGender("female")}
-                >
-                  女性
-                </button>
+                {(["male", "female"] as const).map((g) => (
+                  <button
+                    key={g}
+                    className={`flex-1 py-3 rounded-apple font-semibold text-[15px] transition-all ${
+                      gender === g
+                        ? "bg-apple-blue text-white"
+                        : "bg-apple-gray6 text-apple-secondaryLabel"
+                    }`}
+                    onClick={() => setGender(g)}
+                  >
+                    {g === "male" ? "男性" : "女性"}
+                  </button>
+                ))}
               </div>
             </div>
 
@@ -153,7 +150,7 @@ export function OnboardingPage() {
             </div>
 
             <button
-              className="btn-primary w-full mt-4"
+              className="btn-primary w-full mt-2"
               disabled={!canProceedStep1}
               onClick={() => setStep(2)}
             >
@@ -163,9 +160,13 @@ export function OnboardingPage() {
         )}
 
         {step === 2 && (
-          <div className="space-y-5">
-            <h2 className="text-xl font-bold text-slate-800">目標設定</h2>
-            <p className="text-sm text-slate-500">目標体重と達成期限を設定しましょう</p>
+          <div className="space-y-6 animate-fade-in">
+            <div>
+              <h2 className="page-title">目標設定</h2>
+              <p className="text-[15px] text-apple-secondaryLabel mt-1">
+                目標体重と達成期限を設定しましょう
+              </p>
+            </div>
 
             <div>
               <label className="label">目標体重 (kg)</label>
@@ -191,7 +192,7 @@ export function OnboardingPage() {
               />
             </div>
 
-            <div className="flex gap-3 mt-4">
+            <div className="flex gap-3 mt-2">
               <button className="btn-secondary flex-1" onClick={() => setStep(1)}>
                 戻る
               </button>
@@ -207,9 +208,13 @@ export function OnboardingPage() {
         )}
 
         {step === 3 && (
-          <div className="space-y-5">
-            <h2 className="text-xl font-bold text-slate-800">レース情報</h2>
-            <p className="text-sm text-slate-500">次のレースの情報を教えてください</p>
+          <div className="space-y-6 animate-fade-in">
+            <div>
+              <h2 className="page-title">レース情報</h2>
+              <p className="text-[15px] text-apple-secondaryLabel mt-1">
+                次のレースの情報を教えてください
+              </p>
+            </div>
 
             <div>
               <label className="label">レース名</label>
@@ -232,7 +237,7 @@ export function OnboardingPage() {
               />
             </div>
 
-            <div className="flex gap-3 mt-4">
+            <div className="flex gap-3 mt-2">
               <button className="btn-secondary flex-1" onClick={() => setStep(2)}>
                 戻る
               </button>
