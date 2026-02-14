@@ -20,6 +20,8 @@ interface WeightChartProps {
 }
 
 export function WeightChart({ data, targetWeight }: WeightChartProps) {
+  const chartTextColor = getComputedStyle(document.documentElement).getPropertyValue('--chart-text').trim() || '#8e8e93';
+  const chartGridColor = getComputedStyle(document.documentElement).getPropertyValue('--chart-grid').trim() || 'rgba(60,60,67,0.08)';
   const labels = data.map((d) => formatDateShort(d.date));
 
   const chartData = {
@@ -71,19 +73,19 @@ export function WeightChart({ data, targetWeight }: WeightChartProps) {
         labels: {
           boxWidth: 10,
           font: { size: 11, family: "-apple-system, BlinkMacSystemFont, sans-serif" },
-          color: "#8e8e93",
+          color: chartTextColor,
           padding: 16,
         },
       },
     },
     scales: {
       y: {
-        grid: { color: "rgba(60,60,67,0.08)" },
-        ticks: { font: { size: 10 }, color: "#8e8e93" },
+        grid: { color: chartGridColor },
+        ticks: { font: { size: 10 }, color: chartTextColor },
       },
       x: {
         grid: { display: false },
-        ticks: { font: { size: 9 }, color: "#8e8e93", maxRotation: 45 },
+        ticks: { font: { size: 9 }, color: chartTextColor, maxRotation: 45 },
       },
     },
   };

@@ -52,15 +52,16 @@ export function OnboardingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-apple-bg flex flex-col">
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--color-bg)' }}>
       {/* ステップインジケーター */}
       <div className="flex justify-center gap-3 pt-16 pb-6">
         {[1, 2, 3].map((s) => (
           <div
             key={s}
             className={`h-1 rounded-full transition-all duration-300 ${
-              s <= step ? "w-8 bg-apple-blue" : "w-3 bg-apple-gray4"
+              s <= step ? "w-8 bg-apple-blue" : "w-3"
             }`}
+            style={s > step ? { backgroundColor: 'var(--color-fill)' } : undefined}
           />
         ))}
       </div>
@@ -70,7 +71,7 @@ export function OnboardingPage() {
           <div className="space-y-6 animate-fade-in">
             <div>
               <h2 className="page-title">基本情報</h2>
-              <p className="text-[15px] text-apple-secondaryLabel mt-1">
+              <p className="text-[15px] mt-1" style={{ color: 'var(--color-secondary-label)' }}>
                 あなたの体格情報を教えてください
               </p>
             </div>
@@ -84,8 +85,9 @@ export function OnboardingPage() {
                     className={`flex-1 py-3 rounded-apple font-semibold text-[15px] transition-all ${
                       gender === g
                         ? "bg-apple-blue text-white"
-                        : "bg-apple-gray6 text-apple-secondaryLabel"
+                        : ""
                     }`}
+                    style={gender !== g ? { backgroundColor: 'var(--color-fill)', color: 'var(--color-secondary-label)' } : undefined}
                     onClick={() => setGender(g)}
                   >
                     {g === "male" ? "男性" : "女性"}
@@ -163,7 +165,7 @@ export function OnboardingPage() {
           <div className="space-y-6 animate-fade-in">
             <div>
               <h2 className="page-title">目標設定</h2>
-              <p className="text-[15px] text-apple-secondaryLabel mt-1">
+              <p className="text-[15px] mt-1" style={{ color: 'var(--color-secondary-label)' }}>
                 目標体重と達成期限を設定しましょう
               </p>
             </div>
@@ -211,7 +213,7 @@ export function OnboardingPage() {
           <div className="space-y-6 animate-fade-in">
             <div>
               <h2 className="page-title">レース情報</h2>
-              <p className="text-[15px] text-apple-secondaryLabel mt-1">
+              <p className="text-[15px] mt-1" style={{ color: 'var(--color-secondary-label)' }}>
                 次のレースの情報を教えてください
               </p>
             </div>

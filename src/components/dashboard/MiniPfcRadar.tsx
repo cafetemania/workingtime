@@ -29,7 +29,7 @@ export function MiniPfcRadar({ mealEntries, phaseInfo, weight }: MiniPfcRadarPro
 
   return (
     <div className="card space-y-3">
-      <p className="text-[13px] font-semibold text-apple-secondaryLabel">PFCバランス</p>
+      <p className="text-[13px] font-semibold" style={{ color: 'var(--color-secondary-label)' }}>PFCバランス</p>
       {items.map((item) => {
         const colors = PFC_COLORS[item.label];
         return (
@@ -40,7 +40,7 @@ export function MiniPfcRadar({ mealEntries, phaseInfo, weight }: MiniPfcRadarPro
               >
                 {item.label}
               </span>
-              <span className="text-[13px] font-medium text-apple-secondaryLabel tabular-nums">
+              <span className="text-[13px] font-medium tabular-nums" style={{ color: 'var(--color-secondary-label)' }}>
                 {item.value}%
               </span>
             </div>

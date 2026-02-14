@@ -21,9 +21,12 @@ interface PfcRadarChartProps {
 }
 
 export function PfcRadarChart({ mealEntries, phaseInfo, weight }: PfcRadarChartProps) {
+  const chartTextColor = getComputedStyle(document.documentElement).getPropertyValue('--chart-text').trim() || '#8e8e93';
+  const chartGridColor = getComputedStyle(document.documentElement).getPropertyValue('--chart-grid').trim() || 'rgba(60,60,67,0.08)';
+  const labelColor = getComputedStyle(document.documentElement).getPropertyValue('--color-label').trim() || '#3c3c43';
   if (!phaseInfo) {
     return (
-      <p className="text-[15px] text-apple-tertiaryLabel text-center py-8">
+      <p className="text-[15px] text-center py-8" style={{ color: 'var(--color-tertiary-label)' }}>
         レース情報を設定してください
       </p>
     );
@@ -67,12 +70,12 @@ export function PfcRadarChart({ mealEntries, phaseInfo, weight }: PfcRadarChartP
       r: {
         beginAtZero: true,
         max: 150,
-        ticks: { stepSize: 50, font: { size: 10 }, color: "#8e8e93" },
+        ticks: { stepSize: 50, font: { size: 10 }, color: chartTextColor },
         pointLabels: {
           font: { size: 12, family: "-apple-system, BlinkMacSystemFont, sans-serif" },
-          color: "#3c3c43",
+          color: labelColor,
         },
-        grid: { color: "rgba(60,60,67,0.08)" },
+        grid: { color: chartGridColor },
       },
     },
     plugins: {
@@ -81,7 +84,7 @@ export function PfcRadarChart({ mealEntries, phaseInfo, weight }: PfcRadarChartP
         labels: {
           boxWidth: 10,
           font: { size: 11, family: "-apple-system, BlinkMacSystemFont, sans-serif" },
-          color: "#8e8e93",
+          color: chartTextColor,
           padding: 16,
         },
       },
@@ -93,19 +96,19 @@ export function PfcRadarChart({ mealEntries, phaseInfo, weight }: PfcRadarChartP
       <Radar data={chartData} options={options} />
       <div className="mt-4 grid grid-cols-3 gap-2 text-center">
         <div className="bg-apple-red/10 rounded-apple py-2">
-          <p className="text-[11px] text-apple-tertiaryLabel">P (実/目標)</p>
+          <p className="text-[11px]" style={{ color: 'var(--color-tertiary-label)' }}>P (実/目標)</p>
           <p className="text-[13px] font-semibold text-apple-red tabular-nums">
             {summary.actual.protein}g / {target.protein}g
           </p>
         </div>
         <div className="bg-apple-orange/10 rounded-apple py-2">
-          <p className="text-[11px] text-apple-tertiaryLabel">F (実/目標)</p>
+          <p className="text-[11px]" style={{ color: 'var(--color-tertiary-label)' }}>F (実/目標)</p>
           <p className="text-[13px] font-semibold text-apple-orange tabular-nums">
             {summary.actual.fat}g / {target.fat}g
           </p>
         </div>
         <div className="bg-apple-blue/10 rounded-apple py-2">
-          <p className="text-[11px] text-apple-tertiaryLabel">C (実/目標)</p>
+          <p className="text-[11px]" style={{ color: 'var(--color-tertiary-label)' }}>C (実/目標)</p>
           <p className="text-[13px] font-semibold text-apple-blue tabular-nums">
             {summary.actual.carbohydrate}g / {target.carbohydrate}g
           </p>

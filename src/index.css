@@ -3,17 +3,64 @@
 @tailwind utilities;
 
 @layer base {
+  /* iOS Semantic Colors as CSS Variables */
+  :root {
+    --color-bg: #f2f2f7;
+    --color-card: #ffffff;
+    --color-elevated: #ffffff;
+    --color-separator: rgba(60, 60, 67, 0.12);
+    --color-label: #000000;
+    --color-secondary-label: rgba(60, 60, 67, 0.85);
+    --color-tertiary-label: rgba(60, 60, 67, 0.5);
+    --color-fill: rgba(120, 120, 128, 0.2);
+    --color-secondary-fill: rgba(120, 120, 128, 0.16);
+    --color-grouped-bg: #f2f2f7;
+    --color-glass: rgba(255, 255, 255, 0.82);
+    --color-glass-border: rgba(60, 60, 67, 0.12);
+    --card-shadow: 0 0 0 0.5px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.04);
+    --chart-grid: rgba(60, 60, 67, 0.08);
+    --chart-text: #8e8e93;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-bg: #000000;
+      --color-card: #1c1c1e;
+      --color-elevated: #2c2c2e;
+      --color-separator: rgba(84, 84, 88, 0.65);
+      --color-label: #ffffff;
+      --color-secondary-label: rgba(235, 235, 245, 0.6);
+      --color-tertiary-label: rgba(235, 235, 245, 0.3);
+      --color-fill: rgba(120, 120, 128, 0.36);
+      --color-secondary-fill: rgba(120, 120, 128, 0.32);
+      --color-grouped-bg: #000000;
+      --color-glass: rgba(28, 28, 30, 0.82);
+      --color-glass-border: rgba(84, 84, 88, 0.65);
+      --card-shadow: none;
+      --chart-grid: rgba(84, 84, 88, 0.3);
+      --chart-text: rgba(235, 235, 245, 0.4);
+    }
+  }
+
   html {
     -webkit-tap-highlight-color: transparent;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: "kern";
+    background-color: var(--color-bg);
   }
+
   body {
-    @apply min-h-screen bg-apple-bg text-apple-label;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background-color: var(--color-bg);
+    color: var(--color-label);
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
       "Helvetica Neue", "Hiragino Sans", "Hiragino Kaku Gothic ProN", sans-serif;
+    /* iOS standalone: safe area for status bar */
+    padding-top: env(safe-area-inset-top);
   }
+
   /* iOS-like scrollbar */
   ::-webkit-scrollbar {
     width: 0px;
@@ -24,66 +71,83 @@
 @layer components {
   /* Apple-style primary button */
   .btn-primary {
-    @apply bg-apple-blue text-white px-5 py-3 rounded-apple font-semibold
-           text-[15px] tracking-tight
+    @apply px-5 py-3 rounded-apple font-semibold text-[15px] tracking-tight
            active:opacity-70 transition-all duration-150
            disabled:opacity-40 disabled:cursor-not-allowed;
+    background-color: #007aff;
+    color: #ffffff;
   }
 
   /* Apple-style secondary button */
   .btn-secondary {
-    @apply bg-apple-gray6 text-apple-blue px-5 py-3 rounded-apple font-semibold
-           text-[15px] tracking-tight
-           active:bg-apple-gray5 transition-all duration-150;
+    @apply px-5 py-3 rounded-apple font-semibold text-[15px] tracking-tight
+           active:opacity-70 transition-all duration-150;
+    background-color: var(--color-fill);
+    color: #007aff;
   }
 
-  /* Apple grouped card (iOS Settings-like) */
+  /* Apple grouped card */
   .card {
-    @apply bg-white rounded-apple-lg p-4;
-    box-shadow: 0 0 0 0.5px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.04);
+    @apply rounded-apple-lg p-4;
+    background-color: var(--color-card);
+    box-shadow: var(--card-shadow);
   }
 
   /* Apple-style input field */
   .input-field {
-    @apply w-full px-4 py-3 bg-apple-gray6 rounded-apple
-           text-[17px] text-apple-label placeholder-apple-tertiaryLabel
-           border-0 outline-none
-           focus:ring-2 focus:ring-apple-blue/30 focus:bg-white
-           transition-all duration-200;
+    @apply w-full px-4 py-3 rounded-apple text-[17px] border-0 outline-none
+           focus:ring-2 focus:ring-apple-blue/30 transition-all duration-200;
+    background-color: var(--color-fill);
+    color: var(--color-label);
+  }
+  .input-field::placeholder {
+    color: var(--color-tertiary-label);
+  }
+  .input-field:focus {
+    background-color: var(--color-elevated);
   }
 
   /* Label */
   .label {
-    @apply block text-[13px] font-medium text-apple-secondaryLabel mb-1 uppercase tracking-wide;
+    @apply block text-[13px] font-medium mb-1 uppercase tracking-wide;
+    color: var(--color-secondary-label);
   }
 
   /* iOS-style list row */
   .list-row {
-    @apply flex items-center justify-between px-4 py-3 bg-white
-           active:bg-apple-gray6 transition-colors duration-100;
-  }
-  .list-row + .list-row {
-    box-shadow: inset 0 0.5px 0 0 rgba(60,60,67,0.12);
+    @apply flex items-center justify-between px-4 py-3 active:opacity-70 transition-colors duration-100;
+    background-color: var(--color-card);
   }
 
   /* Frosted glass effect */
   .glass {
-    @apply bg-white/80 backdrop-blur-[20px];
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background-color: var(--color-glass);
+    border-color: var(--color-glass-border);
   }
 
   /* Apple section header */
   .section-header {
-    @apply text-[13px] font-normal text-apple-secondaryLabel uppercase tracking-wide px-4 pb-2;
+    @apply text-[13px] font-normal uppercase tracking-wide px-4 pb-2;
+    color: var(--color-secondary-label);
   }
 
   /* Apple large title */
   .large-title {
-    @apply text-[34px] font-bold tracking-tight text-apple-label;
+    @apply text-[34px] font-bold tracking-tight;
+    color: var(--color-label);
   }
 
   /* Apple title */
   .page-title {
-    @apply text-[28px] font-bold tracking-tight text-apple-label;
+    @apply text-[28px] font-bold tracking-tight;
+    color: var(--color-label);
+  }
+
+  /* iOS separator */
+  .ios-separator {
+    box-shadow: inset 0 -0.5px 0 0 var(--color-separator);
   }
 }
 
@@ -111,5 +175,8 @@
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
   .pb-safe {
     padding-bottom: env(safe-area-inset-bottom);
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
   }
 }

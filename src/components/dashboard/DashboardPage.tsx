@@ -15,7 +15,7 @@ export function DashboardPage() {
     <div className="animate-fade-in">
       {/* iOS Large Title Header */}
       <div className="px-5 pt-14 pb-2">
-        <p className="text-[13px] text-apple-secondaryLabel">{data.profile.raceName}</p>
+        <p className="text-[13px]" style={{ color: 'var(--color-secondary-label)' }}>{data.profile.raceName}</p>
         <h1 className="large-title">ホーム</h1>
       </div>
 

@@ -41,7 +41,7 @@ export function HydrationPage() {
                 cy="60"
                 r="52"
                 fill="none"
-                stroke="#e5e5ea"
+                stroke="var(--color-fill)"
                 strokeWidth="10"
               />
               <circle
@@ -58,28 +58,29 @@ export function HydrationPage() {
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <p className="text-[36px] font-bold text-apple-teal tracking-tight">{totalMl}</p>
-              <p className="text-[13px] text-apple-tertiaryLabel -mt-1">/ {goalMl} ml</p>
+              <p className="text-[13px] -mt-1" style={{ color: 'var(--color-tertiary-label)' }}>/ {goalMl} ml</p>
             </div>
           </div>
-          <p className="text-[15px] text-apple-secondaryLabel">
+          <p className="text-[15px]" style={{ color: 'var(--color-secondary-label)' }}>
             達成率 <span className="font-semibold text-apple-teal">{percent}%</span>
           </p>
         </div>
 
         {/* クイック追加 */}
         <div className="card">
-          <p className="text-[13px] font-semibold text-apple-secondaryLabel mb-3">クイック追加</p>
+          <p className="text-[13px] font-semibold mb-3" style={{ color: 'var(--color-secondary-label)' }}>クイック追加</p>
           <div className="grid grid-cols-2 gap-2">
             {HYDRATION_PRESETS.map((preset) => (
               <button
                 key={preset.label}
-                className="bg-apple-gray6 rounded-apple px-3 py-3 flex items-center justify-center gap-2 active:scale-95 transition-transform"
+                className="rounded-apple px-3 py-3 flex items-center justify-center gap-2 active:scale-95 transition-transform"
+                style={{ backgroundColor: 'var(--color-fill)' }}
                 onClick={() => handleQuickAdd(preset.amount, preset.label)}
               >
                 <span className="text-[18px]">{preset.icon}</span>
                 <div className="text-left">
                   <p className="text-[13px] font-medium">{preset.label}</p>
-                  <p className="text-[11px] text-apple-tertiaryLabel">{preset.amount}ml</p>
+                  <p className="text-[11px]" style={{ color: 'var(--color-tertiary-label)' }}>{preset.amount}ml</p>
                 </div>
               </button>
             ))}
@@ -103,9 +104,9 @@ export function HydrationPage() {
 
         {/* 記録一覧 */}
         <div className="card">
-          <p className="text-[13px] font-semibold text-apple-secondaryLabel mb-2">今日の記録</p>
+          <p className="text-[13px] font-semibold mb-2" style={{ color: 'var(--color-secondary-label)' }}>今日の記録</p>
           {todayEntries.length === 0 ? (
-            <p className="text-[15px] text-apple-tertiaryLabel text-center py-6">
+            <p className="text-[15px] text-center py-6" style={{ color: 'var(--color-tertiary-label)' }}>
               まだ記録がありません
             </p>
           ) : (
@@ -114,11 +115,11 @@ export function HydrationPage() {
                 <div
                   key={entry.id}
                   className="flex justify-between items-center py-3"
-                  style={{ boxShadow: "inset 0 -0.5px 0 0 rgba(60,60,67,0.12)" }}
+                  style={{ boxShadow: "inset 0 -0.5px 0 0 var(--color-separator)" }}
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-[15px]">{entry.type}</span>
-                    <span className="text-[13px] text-apple-tertiaryLabel tabular-nums">
+                    <span className="text-[13px] tabular-nums" style={{ color: 'var(--color-tertiary-label)' }}>
                       {new Date(entry.timestamp).toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" })}
                     </span>
                   </div>

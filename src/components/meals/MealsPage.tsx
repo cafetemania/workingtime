@@ -46,27 +46,27 @@ export function MealsPage() {
       <div className="px-4 pb-6 space-y-4">
         {/* 栄養サマリー */}
         <div className="card">
-          <p className="text-[13px] font-semibold text-apple-secondaryLabel mb-3">今日の栄養</p>
+          <p className="text-[13px] font-semibold mb-3" style={{ color: 'var(--color-secondary-label)' }}>今日の栄養</p>
           <div className="grid grid-cols-4 gap-2 text-center">
             <div>
-              <p className="text-[11px] text-apple-tertiaryLabel uppercase">Cal</p>
+              <p className="text-[11px] uppercase" style={{ color: 'var(--color-tertiary-label)' }}>Cal</p>
               <p className="text-[22px] font-bold tracking-tight">{todayNutrients.energy}</p>
-              <p className="text-[11px] text-apple-tertiaryLabel">kcal</p>
+              <p className="text-[11px]" style={{ color: 'var(--color-tertiary-label)' }}>kcal</p>
             </div>
             <div>
               <p className="text-[11px] text-apple-red font-semibold">P</p>
               <p className="text-[22px] font-bold text-apple-red tracking-tight">{todayNutrients.protein}</p>
-              <p className="text-[11px] text-apple-tertiaryLabel">g</p>
+              <p className="text-[11px]" style={{ color: 'var(--color-tertiary-label)' }}>g</p>
             </div>
             <div>
               <p className="text-[11px] text-apple-orange font-semibold">F</p>
               <p className="text-[22px] font-bold text-apple-orange tracking-tight">{todayNutrients.fat}</p>
-              <p className="text-[11px] text-apple-tertiaryLabel">g</p>
+              <p className="text-[11px]" style={{ color: 'var(--color-tertiary-label)' }}>g</p>
             </div>
             <div>
               <p className="text-[11px] text-apple-blue font-semibold">C</p>
               <p className="text-[22px] font-bold text-apple-blue tracking-tight">{todayNutrients.carbohydrate}</p>
-              <p className="text-[11px] text-apple-tertiaryLabel">g</p>
+              <p className="text-[11px]" style={{ color: 'var(--color-tertiary-label)' }}>g</p>
             </div>
           </div>
         </div>
@@ -85,7 +85,7 @@ export function MealsPage() {
               <svg className="w-6 h-6 mx-auto text-apple-blue mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d={MEAL_ICONS[type]} />
               </svg>
-              <p className="text-[11px] font-medium text-apple-secondaryLabel">{MEAL_TYPE_LABELS[type]}</p>
+              <p className="text-[11px] font-medium" style={{ color: 'var(--color-secondary-label)' }}>{MEAL_TYPE_LABELS[type]}</p>
             </button>
           ))}
         </div>
@@ -93,12 +93,12 @@ export function MealsPage() {
         {/* お気に入り */}
         {data.favorites.length > 0 && (
           <div className="card">
-            <p className="text-[13px] font-semibold text-apple-secondaryLabel mb-2">お気に入り</p>
+            <p className="text-[13px] font-semibold mb-2" style={{ color: 'var(--color-secondary-label)' }}>お気に入り</p>
             {data.favorites.map((fav) => (
               <div
                 key={fav.id}
                 className="flex items-center justify-between py-3"
-                style={{ boxShadow: "inset 0 -0.5px 0 0 rgba(60,60,67,0.12)" }}
+                style={{ boxShadow: "inset 0 -0.5px 0 0 var(--color-separator)" }}
               >
                 <button
                   className="text-[15px] text-apple-blue font-medium text-left flex-1 active:opacity-50"
@@ -119,11 +119,11 @@ export function MealsPage() {
 
         {/* 今日の記録 */}
         <div className="card">
-          <p className="text-[13px] font-semibold text-apple-secondaryLabel mb-2">
+          <p className="text-[13px] font-semibold mb-2" style={{ color: 'var(--color-secondary-label)' }}>
             今日の食事 ({formatDateShort(today)})
           </p>
           {todayMeals.length === 0 ? (
-            <p className="text-[15px] text-apple-tertiaryLabel text-center py-6">
+            <p className="text-[15px] text-center py-6" style={{ color: 'var(--color-tertiary-label)' }}>
               まだ記録がありません
             </p>
           ) : (
@@ -132,7 +132,7 @@ export function MealsPage() {
                 <div
                   key={meal.id}
                   className="py-3"
-                  style={{ boxShadow: "inset 0 -0.5px 0 0 rgba(60,60,67,0.12)" }}
+                  style={{ boxShadow: "inset 0 -0.5px 0 0 var(--color-separator)" }}
                 >
                   <div className="flex justify-between items-center">
                     <span className="text-[15px] font-semibold">
@@ -147,7 +147,7 @@ export function MealsPage() {
                   </div>
                   <ul className="mt-1.5 space-y-1">
                     {meal.items.map((item, idx) => (
-                      <li key={idx} className="text-[13px] text-apple-secondaryLabel flex justify-between">
+                      <li key={idx} className="text-[13px] flex justify-between" style={{ color: 'var(--color-secondary-label)' }}>
                         <span>{item.foodName} ({item.amount}g)</span>
                         <span className="tabular-nums">{item.nutrients.energy}kcal</span>
                       </li>

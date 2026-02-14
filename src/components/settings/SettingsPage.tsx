@@ -65,10 +65,10 @@ export function SettingsPage() {
                 <div
                   key={idx}
                   className="flex justify-between items-center px-4 py-3"
-                  style={idx < 3 ? { boxShadow: "inset 0 -0.5px 0 0 rgba(60,60,67,0.12)" } : undefined}
+                  style={idx < 3 ? { boxShadow: "inset 0 -0.5px 0 0 var(--color-separator)" } : undefined}
                 >
-                  <span className="text-[15px] text-apple-label">{item.label}</span>
-                  <span className="text-[15px] text-apple-secondaryLabel">{item.value}</span>
+                  <span className="text-[15px]" style={{ color: 'var(--color-label)' }}>{item.label}</span>
+                  <span className="text-[15px]" style={{ color: 'var(--color-secondary-label)' }}>{item.value}</span>
                 </div>
               ))}
             </div>
@@ -85,7 +85,7 @@ export function SettingsPage() {
         <div>
           <p className="section-header">目標</p>
           <div className="card">
-            <label className="text-[13px] text-apple-secondaryLabel font-medium">
+            <label className="text-[13px] font-medium" style={{ color: 'var(--color-secondary-label)' }}>
               1日の水分目標 (ml)
             </label>
             <input
@@ -140,8 +140,8 @@ export function SettingsPage() {
         <div>
           <p className="section-header">アプリ情報</p>
           <div className="card">
-            <p className="text-[15px] text-apple-secondaryLabel">マラソン栄養管理 v0.1.0</p>
-            <p className="text-[13px] text-apple-tertiaryLabel mt-1">
+            <p className="text-[15px]" style={{ color: 'var(--color-secondary-label)' }}>マラソン栄養管理 v0.1.0</p>
+            <p className="text-[13px] mt-1" style={{ color: 'var(--color-tertiary-label)' }}>
               データはブラウザのlocalStorageに保存されます
             </p>
           </div>

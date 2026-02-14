@@ -18,7 +18,7 @@ export function ChartsPage() {
 
       <div className="px-4 pb-6 space-y-4">
         <div className="card">
-          <p className="text-[13px] font-semibold text-apple-secondaryLabel mb-3">PFCバランス（今日）</p>
+          <p className="text-[13px] font-semibold mb-3" style={{ color: 'var(--color-secondary-label)' }}>PFCバランス（今日）</p>
           <PfcRadarChart
             mealEntries={data.mealEntries}
             phaseInfo={phaseInfo}
@@ -28,13 +28,13 @@ export function ChartsPage() {
 
         {weightWithEma.length > 1 && (
           <div className="card">
-            <p className="text-[13px] font-semibold text-apple-secondaryLabel mb-3">体重推移</p>
+            <p className="text-[13px] font-semibold mb-3" style={{ color: 'var(--color-secondary-label)' }}>体重推移</p>
             <WeightChart data={weightWithEma} targetWeight={data.profile?.targetWeight} />
           </div>
         )}
 
         <div className="card">
-          <p className="text-[13px] font-semibold text-apple-secondaryLabel mb-3">週間PFC推移</p>
+          <p className="text-[13px] font-semibold mb-3" style={{ color: 'var(--color-secondary-label)' }}>週間PFC推移</p>
           <WeeklyPfcBarChart mealEntries={data.mealEntries} />
         </div>
       </div>

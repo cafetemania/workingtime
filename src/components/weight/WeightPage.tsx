@@ -32,7 +32,7 @@ export function WeightPage() {
       <div className="px-4 pb-6 space-y-4">
         {/* 体重入力 */}
         <div className="card">
-          <p className="text-[13px] font-semibold text-apple-secondaryLabel mb-3">
+          <p className="text-[13px] font-semibold mb-3" style={{ color: 'var(--color-secondary-label)' }}>
             {todayEntry ? "今日の体重" : "今朝の体重を入力"}
           </p>
           {todayEntry ? (
@@ -40,7 +40,7 @@ export function WeightPage() {
               <p className="text-[48px] font-bold text-apple-blue tracking-tight">
                 {todayEntry.weight}
               </p>
-              <p className="text-[15px] text-apple-tertiaryLabel -mt-1">kg</p>
+              <p className="text-[15px] -mt-1" style={{ color: 'var(--color-tertiary-label)' }}>kg</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="flex gap-2">
@@ -64,16 +64,16 @@ export function WeightPage() {
         {/* チャート */}
         {weightWithEma.length > 1 && (
           <div className="card">
-            <p className="text-[13px] font-semibold text-apple-secondaryLabel mb-3">推移</p>
+            <p className="text-[13px] font-semibold mb-3" style={{ color: 'var(--color-secondary-label)' }}>推移</p>
             <WeightChart data={weightWithEma} targetWeight={data.profile?.targetWeight} />
           </div>
         )}
 
         {/* 履歴 */}
         <div className="card">
-          <p className="text-[13px] font-semibold text-apple-secondaryLabel mb-3">履歴</p>
+          <p className="text-[13px] font-semibold mb-3" style={{ color: 'var(--color-secondary-label)' }}>履歴</p>
           {recentEntries.length === 0 ? (
-            <p className="text-[15px] text-apple-tertiaryLabel text-center py-6">
+            <p className="text-[15px] text-center py-6" style={{ color: 'var(--color-tertiary-label)' }}>
               まだ記録がありません
             </p>
           ) : (
@@ -82,9 +82,9 @@ export function WeightPage() {
                 <div
                   key={entry.id}
                   className="flex justify-between items-center py-3"
-                  style={{ boxShadow: "inset 0 -0.5px 0 0 rgba(60,60,67,0.12)" }}
+                  style={{ boxShadow: "inset 0 -0.5px 0 0 var(--color-separator)" }}
                 >
-                  <span className="text-[15px] text-apple-secondaryLabel">
+                  <span className="text-[15px]" style={{ color: 'var(--color-secondary-label)' }}>
                     {formatDateShort(entry.date)}
                   </span>
                   <div className="flex items-center gap-4">

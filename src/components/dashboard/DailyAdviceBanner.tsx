@@ -45,7 +45,7 @@ export function DailyAdviceBanner({
         </div>
         <div className="flex-1 min-w-0">
           <p className="text-[13px] font-semibold text-apple-orange">今日のアドバイス</p>
-          <p className="text-[15px] text-apple-secondaryLabel mt-0.5 leading-relaxed">{advice}</p>
+          <p className="text-[15px] mt-0.5 leading-relaxed" style={{ color: 'var(--color-secondary-label)' }}>{advice}</p>
         </div>
       </div>
     </div>

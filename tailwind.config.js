@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  darkMode: "media",
   theme: {
     extend: {
       colors: {
@@ -11,19 +12,30 @@ export default {
           300: "#a4c0fd",
           400: "#7a9ff9",
           500: "#5a7ef2",
-          600: "#007aff", // iOS Blue
+          600: "#007aff",
           700: "#0063d1",
           800: "#0050aa",
           900: "#003d85",
         },
         apple: {
-          bg: "#f2f2f7",       // iOS system background
+          // Light mode
+          bg: "#f2f2f7",
           card: "#ffffff",
           groupedBg: "#f2f2f7",
           separator: "rgba(60,60,67,0.12)",
           label: "#000000",
           secondaryLabel: "#3c3c43",
           tertiaryLabel: "#8e8e93",
+          // Dark mode equivalents (prefixed with d-)
+          "d-bg": "#000000",
+          "d-card": "#1c1c1e",
+          "d-groupedBg": "#000000",
+          "d-separator": "rgba(84,84,88,0.65)",
+          "d-label": "#ffffff",
+          "d-secondaryLabel": "#ebebf5",
+          "d-tertiaryLabel": "#ebebf599",
+          "d-elevated": "#2c2c2e",
+          // System colors (same in both modes)
           red: "#ff3b30",
           orange: "#ff9500",
           yellow: "#ffcc00",
@@ -39,6 +51,13 @@ export default {
           gray4: "#d1d1d6",
           gray5: "#e5e5ea",
           gray6: "#f2f2f7",
+          // Dark mode grays
+          "d-gray": "#8e8e93",
+          "d-gray2": "#636366",
+          "d-gray3": "#48484a",
+          "d-gray4": "#3a3a3c",
+          "d-gray5": "#2c2c2e",
+          "d-gray6": "#1c1c1e",
         },
       },
       fontFamily: {

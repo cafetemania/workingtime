@@ -45,7 +45,7 @@ export function BottomNavigation() {
   const navigate = useNavigate();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 glass border-t border-apple-separator pb-safe z-50">
+    <nav className="fixed bottom-0 left-0 right-0 glass border-t pb-safe z-50" style={{ borderColor: 'var(--color-separator)' }}>
       <div className="flex justify-around items-center h-16 max-w-lg mx-auto">
         {NAV_ITEMS.map((item) => {
           const isActive = location.pathname === item.path;
@@ -61,7 +61,7 @@ export function BottomNavigation() {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
                 strokeWidth={isActive ? 2 : 1.5}
-                style={{ color: isActive ? "#007aff" : "#8e8e93" }}
+                style={{ color: isActive ? "#007aff" : "var(--color-secondary-label)" }}
               >
                 <path
                   strokeLinecap="round"
@@ -71,7 +71,7 @@ export function BottomNavigation() {
               </svg>
               <span
                 className="text-[10px] mt-0.5 font-medium"
-                style={{ color: isActive ? "#007aff" : "#8e8e93" }}
+                style={{ color: isActive ? "#007aff" : "var(--color-secondary-label)" }}
               >
                 {item.label}
               </span>
