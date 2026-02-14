@@ -26,12 +26,16 @@ export function ChartsPage() {
           />
         </div>
 
-        {weightWithEma.length > 1 && (
-          <div className="card">
-            <p className="text-[13px] font-semibold mb-3" style={{ color: 'var(--color-secondary-label)' }}>体重推移</p>
+        <div className="card">
+          <p className="text-[13px] font-semibold mb-3" style={{ color: 'var(--color-secondary-label)' }}>体重推移</p>
+          {weightWithEma.length > 0 ? (
             <WeightChart data={weightWithEma} targetWeight={data.profile?.targetWeight} />
-          </div>
-        )}
+          ) : (
+            <p className="text-[15px] text-center py-8" style={{ color: 'var(--color-tertiary-label)' }}>
+              体重データを記録すると表示されます
+            </p>
+          )}
+        </div>
 
         <div className="card">
           <p className="text-[13px] font-semibold mb-3" style={{ color: 'var(--color-secondary-label)' }}>週間PFC推移</p>

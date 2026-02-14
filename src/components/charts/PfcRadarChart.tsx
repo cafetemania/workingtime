@@ -70,7 +70,7 @@ export function PfcRadarChart({ mealEntries, phaseInfo, weight }: PfcRadarChartP
       r: {
         beginAtZero: true,
         max: 150,
-        ticks: { stepSize: 50, font: { size: 10 }, color: chartTextColor },
+        ticks: { stepSize: 50, display: false },
         pointLabels: {
           font: { size: 12, family: "-apple-system, BlinkMacSystemFont, sans-serif" },
           color: labelColor,
